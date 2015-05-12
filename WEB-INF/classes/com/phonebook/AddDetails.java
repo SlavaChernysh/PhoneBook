@@ -30,10 +30,10 @@ public class AddDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String in1 = request.getParameter("firstname");
-		String in2 = request.getParameter("lastname");
-		String in3 = request.getParameter("email");
-		String in4 = request.getParameter("phone");
+		String input1 = request.getParameter("firstname");
+		String input2 = request.getParameter("lastname");
+		String input3 = request.getParameter("email");
+		String input4 = request.getParameter("phone");
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs=null;
@@ -47,23 +47,23 @@ public class AddDetails extends HttpServlet {
 			       "<body bgcolor=\"#c0c0c0\">\n"+
 			       "<h1>Result:</h1>\n"+
 			       "<p><ins>You entered the information:</ins></p>\n" + 
-			       "<p> FirstName: "+ in1 + "</p>\n" +
-			       "<p> LastName: "+ in2 + "</p>\n" +
-			       "<p> Email: "+ in3 + "</p>\n" +
-			       "<p> Phone: "+ in4 + "</p>\n" +
+			       "<p> FirstName: "+ input1 + "</p>\n" +
+			       "<p> LastName: "+ input2 + "</p>\n" +
+			       "<p> Email: "+ input3 + "</p>\n" +
+			       "<p> Phone: "+ input4 + "</p>\n" +
 			       "<p><b> and it has just been stored.</b></p>\n"+
 			       "<p>"+ new Date().toString( )+ "</p>\n");	
     		   		   
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			out.write("<p>"+"Loaded driver"+ "</p>\n");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/phonebookdb","root","root");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/phonebookdb?useUnicode=true&characterEncoding=UTF-8","root","root");
 			out.write("<p>"+"Connected to MySQL"+ "</p>\n");
 			out.write("<p><ins>Your current phonebook database:</ins></p>\n");
 	
 			String query1  = "SELECT  *  from	phone_book";
 		    stmt  =	conn.createStatement();
-		    String insert1 = "INSERT INTO phone_book VALUES  ('" + in1 + "', '" + in2 + "', '" + in3 + "', '" + in4 + "')";
+		    String insert1 = "INSERT INTO phone_book(FIRSTNAME, LASTNAME, EMAIL, PHONE) VALUES  ('" + input1 + "', '" + input2 + "', '" + input3 + "', '" + input4 + "')";
 			stmt.executeUpdate(insert1);	    
 		    rs  =	stmt.executeQuery(query1);	
 		    while (rs.next()){
@@ -88,7 +88,8 @@ public class AddDetails extends HttpServlet {
 		}
 		}
 		
-		out.write("</body></html>");
+		out.write("<a href="+"index.html"+">Back</a>\n"+
+		"</body></html>");
 	}
 
 	/**
